@@ -5,9 +5,11 @@ import os
 app = Flask(__name__)
 
 # Konfigurasi database
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:///local.db')  # Fallback ke SQLite
+# Ambil DATABASE_URL dari variabel lingkungan Heroku, jika tidak ada gunakan SQLite lokal (untuk pengembangan).
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:///local.db')  # Fallback ke SQLite jika tidak ada DATABASE_URL
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
+# Inisialisasi SQLAlchemy
 db = SQLAlchemy(app)
 
 # Model Pengguna
@@ -23,7 +25,7 @@ class User(db.Model):
 
 # Buat tabel jika belum ada
 def create_tables():
-    with app.app_context():  # Memasukkan ke dalam konteks aplikasi
+    with app.app_context():  # Memasukkan ke dalam konteks aplikasi untuk memastikan db.create_all() dapat diakses
         db.create_all()
 
 # Route untuk halaman utama
@@ -96,4 +98,4 @@ def handle_delete_user():
 
 if __name__ == '__main__':
     create_tables()  # Memanggil fungsi untuk membuat tabel
-    app.run(debug=True)
+    app.run(debug=True)  # Hanya untuk pengembangan lokal
