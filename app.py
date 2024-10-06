@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 # Konfigurasi database
 # Ambil DATABASE_URL dari variabel lingkungan Heroku, jika tidak ada gunakan SQLite lokal (untuk pengembangan).
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:///local.db')
+app.config["SQLALCHEMY_DATABASE_URI"] = 'postgres://u448hm6rs81p7c:pa28cda9cd0407f7ceffc8d5febe0eff20ca3ac82e17954a2b4804f6962b5ebdc@c9pv5s2sq0i76o.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com:5432/d2jc0piomasl9u'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # Inisialisasi SQLAlchemy
